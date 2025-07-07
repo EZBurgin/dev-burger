@@ -1,0 +1,7 @@
+const { resolve } = require('node:path') // resolve é usado para criar caminhos apartir de uma sequencia de segmentos de caminhos
+
+module.exports = { // esta exportando este objeto
+    config: resolve(__dirname, 'src', 'config', 'database.cjs'), // caminho para o arquivo de conexao com o bd
+    'models-path': resolve(__dirname, 'src', 'app', 'models'), // caminho para o arquivo que define a estrutura das tabelas do bd
+    'migrations-path': resolve(__dirname, 'src', 'database', 'migrations') // caminho para os migrations, que sao scripts que gerenciam alterações no bd
+}
