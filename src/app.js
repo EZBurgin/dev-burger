@@ -6,7 +6,7 @@ import './database/index.js'
 class App {
     constructor() {
         this.app = express()
-        
+
         this.middlewares();
         this.routes();
     }
@@ -19,7 +19,7 @@ class App {
         this.app.use(routes)
     }
 
-    
+
 }
 
 export default new App().app
