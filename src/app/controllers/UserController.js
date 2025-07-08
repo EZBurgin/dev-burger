@@ -19,7 +19,8 @@ class UserController {
             admin: Yup.boolean()
         })
 
-        try {
+        // usar esse metodo quando não tem problema eu falar o que esta errado para o usuário
+        try { 
             schema.validateSync(req.body, { abortEarly: false })
         } catch (err) {
             return res.status(400).json({ error: err.errors })

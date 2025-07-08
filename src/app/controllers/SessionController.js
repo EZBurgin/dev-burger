@@ -8,7 +8,7 @@ class SessionController {
             password: Yup.string().min(6).required()
         })
 
-        const isValid = await schema.isValid(req.body)
+        const isValid = await schema.isValid(req.body) // usar esse metodo quando não é pra passar o que esta errado para o usuario
 
         const emailOrPasswordIncorrect = () => {
             res.status(401).json({ error: 'Make sure your email or password are correct' }) // para evitar repetições nas mensagens de erro
