@@ -1,23 +1,31 @@
 import * as Yup from 'yup'
 import Product from '../models/Product.js'
 import Category from '../models/Category.js'
+import User from '../models/User.js'
 
 class ProductController {
     async store(req, res) {
         const schema = Yup.object({
             name: Yup.string().required(),
-            price: Yup.number().required() ,
+            price: Yup.number().required(),
             category_id: Yup.number().required()
         })
 
         try {
-            schema.validateSync(req.body, {abortEarly: false})
-        }catch(err) {
+            schema.validateSync(req.body, { abortEarly: false })
+        } catch (err) {
             return res.status(400).json({ error: err.errors })
         }
 
+        const { admin: isAdmin } = await User.findByPk(req.userId)
+
+        if (!isAdmin) {
+            return res.status(401).json()
+        }
+
+
         const { filename: path } = req.file // : usado para renomear 
-        const {name, price, category_id} = req.body
+        const { name, price, category_id } = req.body
 
         const product = await Product.create({
             name,
