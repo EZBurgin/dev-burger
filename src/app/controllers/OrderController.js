@@ -57,10 +57,42 @@ class OrderController {
                 id: req.userId,
                 name: req.userName
             },
-            products: formattedProducts
+            products: formattedProducts,
+            status: 'Pedido realizado'
         }
 
-        return res.status(201).json(order)
+        const createdOrder = await Order.create(order)
+
+        return res.status(201).json(createdOrder)
+    }
+
+    async index(req, res) {
+        const orders = await Order.find()
+
+        return res.json(orders)
+    }
+
+    async update(req, res) {
+        const schema = Yup.object({
+            status: Yup.string().required()
+        })  
+
+        try {
+            schema.validateSync(req.body, { abortEarly: false})
+        }catch(err) {
+            return res.status(400).json({ error: err.errors })
+        }
+
+        const { id } = req.params
+        const { status } = req.body
+        
+        try {
+            await Order.updateOne({ _id: id}, { status })
+        }catch (err){
+            return res.status(400).json({ error: err})
+        }
+
+        return res.json({ message: 'Status updated sucessfully'})
     }
 }
 
