@@ -4,8 +4,9 @@ import * as Yup from 'yup'
 
 import * as S from './styles.js'
 import { Button } from '../../components/Button/index.jsx'
-
 import logo2 from '../../assets/logo2.svg'
+
+import { api } from '../../services/api.js'
 
 export default function Login() {
 
@@ -21,8 +22,14 @@ export default function Login() {
     } = useForm({
         resolver: yupResolver(schema)
     })
-    const onSubmit = (data) => console.log(data)
-    console.log(errors)
+    const onSubmit = async (data) => {
+        const response = await api.post('/session', {
+            email: data.email,
+            password: data.password
+        })
+        console.log(response)
+    }
+    
     return (
         <S.Container>
 
