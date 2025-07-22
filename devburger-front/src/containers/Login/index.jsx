@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
+import { toast } from 'react-toastify';
 
 import * as S from './styles.js'
 import { Button } from '../../components/Button/index.jsx'
@@ -22,14 +23,24 @@ export default function Login() {
     } = useForm({
         resolver: yupResolver(schema)
     })
+
     const onSubmit = async (data) => {
-        const response = await api.post('/session', {
-            email: data.email,
-            password: data.password
-        })
-        console.log(response)
+        const response = await toast.promise(
+            api.post('/session', {
+                email: data.email,
+                password: data.password
+            }),
+            {
+                pending: 'Verificando seus dados',
+                success: 'Seja Bem Vindo(a) 👌',
+                error: 'Email ou Senha inválidos 🤯'
+            }
+        )
+
+
+
     }
-    
+
     return (
         <S.Container>
 
@@ -44,15 +55,16 @@ export default function Login() {
                 <S.Form onSubmit={handleSubmit(onSubmit)}>
                     <S.InputContainer>
                         <label>Email</label>
-                        <input type="email" {...register("email")}/>
+                        <input type="email" {...register("email")} />
                         <p>{errors?.email?.message}</p>
                     </S.InputContainer>
                     <S.InputContainer>
                         <label>Password</label>
-                        <input type="password" {...register("password")}/>
+                        <input type="password" {...register("password")} />
                         <p>{errors?.password?.message}</p>
+
                     </S.InputContainer>
-                    <Button type="submit">Entrar</Button>
+                    <Button type="submit" >Entrar</Button>
                 </S.Form>
                 <p>
                     Não possui  conta? <a>Clique aqui.</a>
