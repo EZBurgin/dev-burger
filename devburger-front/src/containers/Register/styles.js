@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import BackgroundLogin from '../../assets/background-login.svg'
 import Background from '../../assets/background.svg'
 
 import { Link as ReactLink } from 'react-router-dom'
@@ -8,23 +7,6 @@ export const Container = styled.div`
     display: flex;
     width: 100vw;
     height: 100vh;
-`
-export const LeftContainer = styled.div`
-    background: url('${BackgroundLogin}');
-    background-size: cover;
-    background-position: center;
-
-    height: 100%;
-    width: 100%;
-    max-width: 50%;
-
-    display: flex;
-    justify-content:center;
-    align-items:center;
-
-    img {
-        width: 80%;
-    }
 `
 export const RightContainer = styled.div`
     background: url('${Background}');

@@ -1,0 +1,36 @@
+
+version: '3.8' # Versão da sintaxe do Docker Compose
+
+services:
+  # Serviço PostgreSQL
+  postgres_db:
+    image: postgres:17 # Ou a versão que você usava, ex: postgres:latest, postgres:15
+    container_name: devburger_postgres_container # Nome amigável para o contêiner
+    restart: always # O contêiner sempre reinicia se parar
+    ports:
+      - "5433:5432" # Mapeia a porta 5433 do seu PC para a porta 5432 do contêiner
+    environment:
+      POSTGRES_DB: devburger # Nome do banco de dados que seu app espera
+      POSTGRES_USER: postgres # Usuário que seu app espera
+      POSTGRES_PASSWORD: postgres # Senha que seu app espera
+      PGDATA: /var/lib/postgresql/data/pgdata # <-- Adicionar esta linha para o PostgreSQL no Docker
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persiste os dados em um volume nomeado
+
+  # Serviço MongoDB
+  mongodb_db:
+    image: mongo:8.0 # Ou a versão que você usava, ex: mongo:latest, mongo:5.0
+    container_name: devburger_mongodb_container # Nome amigável para o contêiner
+    restart: always # O contêiner sempre reinicia se parar
+    ports:
+      - "27017:27017" # Mapeia a porta 27017 do seu PC para a porta 27017 do contêiner
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongodb # Usuário root do MongoDB
+      MONGO_INITDB_ROOT_PASSWORD: mongodb # Senha root do MongoDB
+    volumes:
+      - mongodbdata:/data/db # Persiste os dados em um volume nomeado
+
+# Definição dos volumes para persistência de dados
+volumes:
+  pgdata:
+  mongodbdata:

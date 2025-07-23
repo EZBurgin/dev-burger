@@ -5,8 +5,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
 import * as S from './styles.js'
-import logo2 from '../../assets/logo2.svg'
 import { Button } from '../../components/Button/index.jsx'
+import { LeftContainer } from '../../components/LeftContainer/index.jsx'
 
 import { api } from '../../services/api.js'
 
@@ -58,20 +58,11 @@ export function Register() {
         } catch (err) {
             toast.error('😥 Falha no sistema! Tente novamente.')
         }
-
-
-
-
-
-
     }
 
     return (
         <S.Container>
-            <S.LeftContainer>
-                <img src={logo2} alt="logo-devburger" />
-            </S.LeftContainer>
-
+            <LeftContainer></LeftContainer>
 
             <S.RightContainer>
                 <S.Title>Criar Conta</S.Title>

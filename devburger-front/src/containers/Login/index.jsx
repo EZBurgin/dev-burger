@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles.js'
 import { Button } from '../../components/Button/index.jsx'
-import logo2 from '../../assets/logo2.svg'
+import { LeftContainer } from '../../components/LeftContainer/index.jsx'
 
 import { api } from '../../services/api.js'
 
@@ -53,9 +53,7 @@ export function Login() {
     return (
         <S.Container>
 
-            <S.LeftContainer>
-                <img src={logo2} alt='devburger-logo' />
-            </S.LeftContainer>
+            <LeftContainer></LeftContainer>
 
             <S.RightContainer>
                 <S.Title>Olá, seja bem vindo ao <span>Dev Burguer!</span> <br />
