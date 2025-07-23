@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles.js'
 import { Button } from '../../components/Button/index.jsx'
@@ -9,7 +10,9 @@ import logo2 from '../../assets/logo2.svg'
 
 import { api } from '../../services/api.js'
 
-export default function Login() {
+export function Login() {
+
+    const navigate = useNavigate()
 
     const schema = Yup.object({
         email: Yup.string().email('Digite um Email válido').required('Digite um Email'),
@@ -25,20 +28,26 @@ export default function Login() {
     })
 
     const onSubmit = async (data) => {
+
         const response = await toast.promise(
             api.post('/session', {
                 email: data.email,
                 password: data.password
-            }),
+            }
+            ),
             {
                 pending: 'Verificando seus dados',
-                success: 'Seja Bem Vindo(a) 👌',
+                success: {
+                    render() {
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 2000)
+                        return 'Seja Bem Vindo(a) 👌'
+                    }
+                },
                 error: 'Email ou Senha inválidos 🤯'
             }
         )
-
-
-
     }
 
     return (
@@ -67,7 +76,7 @@ export default function Login() {
                     <Button type="submit" >Entrar</Button>
                 </S.Form>
                 <p>
-                    Não possui  conta? <a>Clique aqui.</a>
+                    Não possui  conta? <S.Link to='/cadastro'>Clique aqui.</S.Link>
                 </p>
             </S.RightContainer>
 
